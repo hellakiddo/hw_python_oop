@@ -114,10 +114,6 @@ class Swimming(Training):
         self.lenght_pool = length_pool
         self.count_pool = count_pool
 
-    def get_distance(self) -> float:
-        """Получить дистанцию в км."""
-        return self.action * self.LEN_STEP / self.M_IN_KM
-
     def get_mean_speed(self) -> float:
         return (self.lenght_pool * self.count_pool
                 / Training.M_IN_KM / self.duration)
