@@ -48,7 +48,7 @@ class Training:
         LEN_STEP = 0.65
         M_IN_KM = 1000
 
-        speed = self.action * LEN_STEP / M_IN_KM / self.duration
+        speed = (self.action * LEN_STEP) / M_IN_KM / self.duration
         return speed
 
     def get_spent_calories(self) -> float:
@@ -87,7 +87,8 @@ class Running(Training):
                      * self.action * Running.LEN_STEP / Running.M_IN_KM
                      / self.duration
                      + Running.CALORIES_MEAN_SPEED_SHIFT)
-                    * self.weight / Running.M_IN_KM * Running.MIN)
+                    * self.weight / Running.M_IN_KM
+                    * self.duration * Running.MIN)
         return calories
 
     def show_training_info(self) -> InfoMessage:
@@ -105,6 +106,7 @@ class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
     CALORIES_WEIGHT_MULTIPLIER = 0.035
     CALORIES_WEIGHT_SHIFT = 0.029
+    M_IN_KM = 1000
     LEN_STEP = 0.65
     CALORIES_SPEED_HEIGHT_MULTIPLIER = 0.029
     KMH_IN_MSEC = 0.278
@@ -117,11 +119,12 @@ class SportsWalking(Training):
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
+        CUR_SPEED = (SportsWalking.KMH_IN_MSEC
+                     * self.get_mean_speed() * 100 / 100)
 
         calories = (((SportsWalking.CALORIES_WEIGHT_MULTIPLIER
-                      * self.weight + (SportsWalking.KMH_IN_MSEC
-                                       ** 2 / self.height
-                                       / SportsWalking.CM_IN_M)
+                      * self.weight + (CUR_SPEED ** 2
+                                       / (self.height / SportsWalking.CM_IN_M))
                       * SportsWalking.CALORIES_SPEED_HEIGHT_MULTIPLIER
                       * self.weight) * self.duration * SportsWalking.MIN))
 
