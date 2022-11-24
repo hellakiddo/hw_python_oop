@@ -120,7 +120,8 @@ class SportsWalking(Training):
 
         calories = (((SportsWalking.CALORIES_WEIGHT_MULTIPLIER
                       * self.weight + (SportsWalking.KMH_IN_MSEC
-                                       ** 2 / self.height / SportsWalking.CM_IN_M)
+                                       ** 2 / self.height
+                                       / SportsWalking.CM_IN_M)
                       * SportsWalking.CALORIES_SPEED_HEIGHT_MULTIPLIER
                       * self.weight) * self.duration * SportsWalking.MIN))
 
