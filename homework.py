@@ -135,13 +135,13 @@ TYPES_OF_TRAINING = {
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
     if workout_type not in TYPES_OF_TRAINING:
-        raise TypeError
+        raise ValueError('Пришел неожиданный тип тренировки (workout_type)')
     return TYPES_OF_TRAINING[workout_type](*data)
 
 
 def main(training: Training) -> None:
     """Главная функция."""
-    return print(training.show_training_info().get_message())
+    print(training.show_training_info().get_message())
 
 
 if __name__ == '__main__':
